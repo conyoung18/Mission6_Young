@@ -1,0 +1,40 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Movie
+
+<h1>Enter a Movie</h1>
+
+@* Page using the shared layout that has receives the user input and saves it as a response object *@
+
+<form method="post">
+    <label asp-for="Category">Category:</label>
+    <input asp-for="Category"/>
+    <br/>
+    <label asp-for="Title">Title:</label>
+    <input asp-for="Title"/>
+    <br/>
+    <label asp-for="Year">Year:</label>
+    <input asp-for="Year"/>
+    <br/>
+    <label asp-for="Director">Director:</label>
+    <input asp-for="Director"/>
+    <br/>
+    <label asp-for="Rating">Rating:</label>
+    <select asp-for="Rating" asp-items="Html.GetEnumSelectList<Rating>()" class="form-control"></select>
+    <br/>
+    <label asp-for="Edited">Edited?</label>
+    <select asp-for="Edited">
+        <option value="false">No</option> @* No is selected by default *@
+        <option value="true">Yes</option>
+    </select>
+    <br/>
+    <label asp-for="Lent_To">Lent to:</label>
+    <input asp-for="Lent_To"/>
+    <br/>
+    <label asp-for="Notes">Notes:</label>
+    <input asp-for="Notes"/>
+    <br/>
+
+    <button type="submit">Enter Movie</button>
+</form>
