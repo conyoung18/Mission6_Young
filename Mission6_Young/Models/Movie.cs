@@ -16,18 +16,19 @@ public class Movie
 {
     [Key]
     [Required]
-    public int MovieID { get; set; }
-    public int? CategoryID { get; set; }
+    public int MovieId { get; set; }
+    public int? CategoryId { get; set; }
     public Category? Category { get; set; }
     [Required]
     public string Title { get; set; }
     [Required]
+    [Range(1888, 2500)]
     public int Year { get; set; }
     public string? Director { get; set; }
     public Rating? Rating { get; set; }
     [Required]
     public bool Edited { get; set; } = false;
-    public string? Lent_To { get; set; }
+    public string? LentTo { get; set; }
     [Required]
     public bool CopiedToPlex { get; set; } = false;
     [MaxLength(25)]

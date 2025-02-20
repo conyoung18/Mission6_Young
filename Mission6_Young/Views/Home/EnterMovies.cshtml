@@ -8,8 +8,18 @@
 @* Page using the shared layout that has receives the user input and saves it as a response object *@
 
 <form method="post">
-    <label asp-for="Category">Category:</label>
-    <input asp-for="Category"/>
+    
+    <input type="hidden" asp-for="MovieId"> @* Pass in the movie ID but don't let user see it *@
+    
+    <select asp-for="CategoryId">
+        <option value="">Category:</option>
+        @foreach (Category c in ViewBag.Categories)
+        {
+            <option value="@c.CategoryId">@c.CategoryName</option> @*Grab the CategoryId and save it as the value while
+                                                                    displaying the category name*@
+        }
+    </select>
+    
     <br/>
     <label asp-for="Title">Title:</label>
     <input asp-for="Title"/>
@@ -29,8 +39,8 @@
         <option value="true">Yes</option>
     </select>
     <br/>
-    <label asp-for="Lent_To">Lent to:</label>
-    <input asp-for="Lent_To"/>
+    <label asp-for="LentTo">Lent to:</label>
+    <input asp-for="LentTo"/>
     <br/>
     <label asp-for="Notes">Notes:</label>
     <input asp-for="Notes"/>

@@ -24,10 +24,14 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+    [HttpGet]
     public IActionResult EnterMovies()
     {
-        return View();
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+        
+        return View(new Movie());
     }
     
     [HttpPost]
@@ -48,4 +52,54 @@ public class HomeController : Controller
         
         return RedirectToAction("EnterMovies");
     }
+
+    public IActionResult ViewMovies() // Returns the database in a table format, passing in movies variable as a list
+    {
+        var movies = _context.Movies
+            .Include(x => x.Category)
+            .ToList();
+        
+        return View(movies);
+    }
+
+    [HttpGet]
+    public IActionResult EditMovie(int movieId)
+    {
+        var movieToEdit = _context.Movies
+            .Single(x => x.MovieId == movieId);
+        
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryName)
+            .ToList();
+        
+        return View("EnterMovies", movieToEdit);
+    }
+
+    [HttpPost]
+    public IActionResult EditMovie(Movie updatedMovie)
+    {
+        _context.Update(updatedMovie);
+        _context.SaveChanges();
+        
+        return RedirectToAction("ViewMovies");
+    }
+
+    [HttpGet]
+    public IActionResult DeleteMovie(int movieId)
+    {
+        var movieToDelete = _context.Movies
+            .Single(x => x.MovieId == movieId);
+        
+        return View(movieToDelete);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteMovie(Movie movie)
+    {
+        _context.Movies.Remove(movie);
+        _context.SaveChanges();
+        
+        return RedirectToAction("ViewMovies");
+    }
+    
 }
