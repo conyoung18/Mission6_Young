@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace Mission6_Young.Models;
 
@@ -19,9 +20,9 @@ public class Movie
     public int MovieId { get; set; }
     public int? CategoryId { get; set; }
     public Category? Category { get; set; }
-    [Required]
+    [Required(ErrorMessage = "You must enter a title")]
     public string Title { get; set; }
-    [Required]
+    [Required(ErrorMessage = "You must enter a valid year")]
     [Range(1888, 2500)]
     public int Year { get; set; }
     public string? Director { get; set; }

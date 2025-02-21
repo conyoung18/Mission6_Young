@@ -31,33 +31,34 @@ public class HomeController : Controller
             .OrderBy(x => x.CategoryName)
             .ToList();
         
-        return View(new Movie());
+        return View("EnterMovies", new Movie());
     }
     
     [HttpPost]
     public IActionResult EnterMovies (Movie response)
     {
-        _context.Movies.Add(response); // Add record to the database
-        
-        try // Error Handling
+        if (ModelState.IsValid)
         {
+            _context.Movies.Add(response); // Add record to the database
             _context.SaveChanges();
+
+            return RedirectToAction("ViewMovies");
         }
-        catch (DbUpdateException ex)
+        else // Invalid data
         {
-            var innerException = ex.InnerException?.Message;
-            Console.WriteLine("Error saving to database: " + innerException);
-            throw; // Re-throw to see full error details in logs
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+            
+            return View("EnterMovies", response);
         }
-        
-        return RedirectToAction("EnterMovies");
     }
 
     public IActionResult ViewMovies() // Returns the database in a table format, passing in movies variable as a list
     {
         var movies = _context.Movies
             .Include(x => x.Category)
-            .ToList();
+            .ToList() ?? new List<Movie>();;
         
         return View(movies);
     }

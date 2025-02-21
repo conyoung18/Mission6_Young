@@ -7,44 +7,59 @@
 
 @* Page using the shared layout that has receives the user input and saves it as a response object *@
 
-<form method="post">
-    
-    <input type="hidden" asp-for="MovieId"> @* Pass in the movie ID but don't let user see it *@
-    
-    <select asp-for="CategoryId">
-        <option value="">Category:</option>
-        @foreach (Category c in ViewBag.Categories)
-        {
-            <option value="@c.CategoryId">@c.CategoryName</option> @*Grab the CategoryId and save it as the value while
-                                                                    displaying the category name*@
-        }
-    </select>
-    
-    <br/>
-    <label asp-for="Title">Title:</label>
-    <input asp-for="Title"/>
-    <br/>
-    <label asp-for="Year">Year:</label>
-    <input asp-for="Year"/>
-    <br/>
-    <label asp-for="Director">Director:</label>
-    <input asp-for="Director"/>
-    <br/>
-    <label asp-for="Rating">Rating:</label>
-    <select asp-for="Rating" asp-items="Html.GetEnumSelectList<Rating>()" class="form-control"></select>
-    <br/>
-    <label asp-for="Edited">Edited?</label>
-    <select asp-for="Edited">
-        <option value="false">No</option> @* No is selected by default *@
-        <option value="true">Yes</option>
-    </select>
-    <br/>
-    <label asp-for="LentTo">Lent to:</label>
-    <input asp-for="LentTo"/>
-    <br/>
-    <label asp-for="Notes">Notes:</label>
-    <input asp-for="Notes"/>
-    <br/>
+<form method="post" class="container mt-4">
+    <input type="hidden" asp-for="MovieId"> @* Hidden Movie ID *@
 
-    <button type="submit">Enter Movie</button>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Category:</label>
+        <select asp-for="CategoryId" class="form-select">
+            <option value="">Select a category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId">@c.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title:</label>
+        <input asp-for="Title" class="form-control" placeholder="Enter movie title">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label">Year:</label>
+        <input asp-for="Year" class="form-control" placeholder="e.g., 2024">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Director" class="form-label">Director:</label>
+        <input asp-for="Director" class="form-control" placeholder="Enter director's name">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label">Rating:</label>
+        <select asp-for="Rating" asp-items="Html.GetEnumSelectList<Rating>()" class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Edited" class="form-label">Edited?</label>
+        <select asp-for="Edited" class="form-select">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LentTo" class="form-label">Lent to:</label>
+        <input asp-for="LentTo" class="form-control" placeholder="Enter name">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label">Notes:</label>
+        <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Additional notes"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enter Movie</button>
+    
+    <div asp-validation-summary="All"></div>
 </form>
